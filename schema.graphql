@@ -4,6 +4,8 @@
 
 type Mutation {
   createTodo(description: String!, title: String!): Todo!
+  deleteTodo(id: String!): Todo!
+  updateTodo(description: String!, id: String!, title: String!): Todo!
 }
 
 type Query {

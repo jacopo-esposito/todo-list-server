@@ -43,5 +43,37 @@ export const TodoMutation = extendType({
         return ctx.db.todo.create({ data: todo })
       }
     })
+
+    t.nonNull.field('updateTodo', {
+      type: 'Todo',
+      args: {
+        id: nonNull(stringArg()),
+        title: nonNull(stringArg()),
+        description: nonNull(stringArg())
+      },
+      resolve(_root, args, ctx) {
+        const todo = {
+          title: args.title,
+          description: args.description
+        }
+        return ctx.db.todo.update({
+          where: { id: args.id },
+          data: {
+            title: args.title,
+            description: args.description
+          }
+        })
+      }
+    })
+
+    t.nonNull.field('deleteTodo', {
+      type: 'Todo',
+      args: {
+        id: nonNull(stringArg())
+      },
+      resolve(_root, args, ctx) {
+        return ctx.db.todo.delete({ where: { id: args.id } })
+      }
+    })
   }
 })
