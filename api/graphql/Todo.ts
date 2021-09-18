@@ -52,10 +52,6 @@ export const TodoMutation = extendType({
         description: nonNull(stringArg())
       },
       resolve(_root, args, ctx) {
-        const todo = {
-          title: args.title,
-          description: args.description
-        }
         return ctx.db.todo.update({
           where: { id: args.id },
           data: {
@@ -68,9 +64,7 @@ export const TodoMutation = extendType({
 
     t.nonNull.field('deleteTodo', {
       type: 'Todo',
-      args: {
-        id: nonNull(stringArg())
-      },
+      args: { id: nonNull(stringArg()) },
       resolve(_root, args, ctx) {
         return ctx.db.todo.delete({ where: { id: args.id } })
       }
